@@ -9,6 +9,10 @@ import java.util.Map;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
+/**
+ * The thread that watches for changes in specified directories and each directory created
+ * within watched directory tree. Invokes provided callback whenever change is noticed.
+ */
 public class WatchrThread extends Thread {
     private final OnChangeCallback callback;
     private final Path[] dirs;
@@ -40,7 +44,6 @@ public class WatchrThread extends Thread {
                 callback.onChange(dir, events);
 
                 for (WatchEvent<?> event : events) {
-                    System.out.println("Taken " + event.kind());
                     if (event.kind() == ENTRY_CREATE) {
                         // Need to register to newly created directories
                         Path name = (Path) event.context();
@@ -64,8 +67,6 @@ public class WatchrThread extends Thread {
             // TODO: add handling
         } catch (InterruptedException e) {
             // TODO: add handling
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         }
     }
 

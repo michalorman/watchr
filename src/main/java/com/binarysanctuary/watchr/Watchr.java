@@ -10,7 +10,9 @@ import java.util.Arrays;
  * over JDK 7 {@link java.nio.file.WatchService}.
  * <p/>
  * The <tt>Watchr</tt> setups thread that is responsible for watching for changes in
- * specified directories and invokes callback whenever change is noticed.
+ * specified directories and invokes callback whenever change is noticed. <tt>Watchr</tt>
+ * watches for CREATE, MODIFY or DELETE events in all provided directories and subdirectories.
+ * Each directory created inside watched directory is also registered for watch.
  */
 public class Watchr {
     public static WatchrThread watch(OnChangeCallback callback, String... dirs) throws IOException {
